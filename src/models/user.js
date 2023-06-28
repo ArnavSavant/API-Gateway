@@ -1,6 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const {serverConfig} = require('../config')
+const {serverConfig} = require('../config');
 const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
