@@ -1,6 +1,11 @@
-# Backend API Gateway and Authentication Service
-This is the backend of API--Gateway and Authentication-Service.
-It is one of the microservice of the complete PROJECT which mimics the authentication service in an API gateway.
+# Backend API Gateway
+
+This is the backend of API--Gateway
+It is one of the microservice of the complete PROJECT which mimics the setting up of the following services in an API gateway:
+
+- `Authentication Service`
+- `Rate Limiter `
+- `Reverse Proxy`
 
 ## Other Microservices
 
@@ -52,12 +57,22 @@ To set up the project, follow these steps:
 
    ```
    PORT=<port number of your choice>
+   SALT_ROUNDS=<The time that should be taken to calculate Bcrypt Cost Factor>
+   JWT_SECRET=<The JWT secret key of your choice>
+   JWT_EXPIRY=<The expiry time of a specific JWT Token>
+   FLIGHT_SERVICE=<address of the server where flights service is hosted>
+   BOOKING_SERVICE=<address of the server where bookings service is hosted>
    ```
 
    Example:
 
    ```
    PORT=5000
+   SALT_ROUNDS=8
+   JWT_SECRET='jwt_arnav_secret_12321@#@'
+   JWT_EXPIRY='1h',
+   FLIGHT_SERVICE="http://localhost:3000",
+   BOOKING_SERVICE="http://localhost:4000"
    ```
 
 4. Navigate to the `src` folder in your terminal and execute the following command to initialize Sequelize:
