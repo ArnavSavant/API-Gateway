@@ -12,7 +12,7 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
 			name: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
 				values: [ADMIN, CUSTOMER, FLIGHT_COMPANY],
 				defaultValue: CUSTOMER,
 				allowNull: false,
