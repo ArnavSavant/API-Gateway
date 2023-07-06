@@ -9,20 +9,20 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			userId: {
+			UserId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
-					model: "Users",
+					model: "users",
 					key: "id",
 				},
 				onDelete: "CASCADE",
 			},
-			roleId: {
+			RoleId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
-					model: "Roles",
+					model: "roles",
 					key: "id",
 				},
 				onDelete: "CASCADE",
