@@ -14,4 +14,11 @@ router.post(
 	userController.signin
 );
 
+router.post(
+	"/role",
+	AuthMiddlewares.checkAuthentication,
+	AuthMiddlewares.isAdmin,
+	userController.addRoleToUser
+);
+
 module.exports = router;

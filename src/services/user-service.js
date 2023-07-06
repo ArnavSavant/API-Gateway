@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const AppError = require("../utils/errors/app-error");
 const { Auth } = require("../utils/common");
 const Enum = require("../utils/common/enum");
-const { UserRepository,RoleRepository } = require("../repositories");
+const { UserRepository, RoleRepository } = require("../repositories");
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 async function createUser(data) {
@@ -44,6 +44,7 @@ async function signIn(data) {
 		const jwt = Auth.createToken({ id: user.id, email: user.email });
 		return jwt;
 	} catch (error) {
+		console.log(error);
 		if (error instanceof AppError) {
 			throw error;
 		}
@@ -73,11 +74,69 @@ async function isAuthenticated(token) {
 			throw new AppError("Invalid JWT token", StatusCodes.BAD_REQUEST);
 		}
 		console.log(error);
-		throw new AppError("Something went wrong", StatusCodes.INTERNAL_SERVER_ERROR);
+		throw new AppError(
+			"Something went wrong",
+			StatusCodes.INTERNAL_SERVER_ERROR
+		);
+	}
+}
+
+async function addRole(data) {
+	try {
+		const user = await userRepository.get(data.id);
+		if (!user) {
+			throw new AppError(
+				"User not found with following id",
+				StatusCodes.NOT_FOUND
+			);
+		}
+		const role = await roleRepository.getRoleByName(data.role);
+		if (!role) {
+			throw new AppError(
+				"Following role does not exist",
+				StatusCodes.NOT_FOUND
+			);
+		}
+		user.addRole(role);
+		return user;
+	} catch (error) {
+		if (error instanceof AppError) {
+			throw error;
+		}
+		console.log(error);
+		throw new AppError(
+			"Something went wrong",
+			StatusCodes.INTERNAL_SERVER_ERROR
+		);
+	}
+}
+
+async function isAdmin(id) {
+	try {
+		const user = await userRepository.get(id);
+		if (!user) {
+			throw new AppError(
+				"User not found with following id",
+				StatusCodes.NOT_FOUND
+			);
+		}
+		const adminRole = await roleRepository.getRoleByName(Enum.USER_ROLES.ADMIN);
+		return user.hasRole(adminRole);
+	} catch (error) {
+		if (error instanceof AppError) {
+			throw error;
+		}
+		console.log(error);
+		throw new AppError(
+			"Something went wrong",
+			StatusCodes.INTERNAL_SERVER_ERROR
+		);
 	}
 }
 module.exports = {
 	createUser,
 	signIn,
-	isAuthenticated
+	isAuthenticated,
+	addRole,
+	isAdmin,
 };
