@@ -1,13 +1,13 @@
 const { StatusCodes } = require("http-status-codes");
 const { ErrorResponse, SuccessResponse } = require("../utils/common");
 
-const {UserService} = require('../services');
+const { UserService } = require("../services");
 
 async function signup(req, res) {
 	try {
 		const user = await UserService.createUser({
 			email: req.body.email,
-         password: req.body.password,
+			password: req.body.password,
 		});
 		SuccessResponse.messages = "User Created SuccessFully";
 		SuccessResponse.data = user;
@@ -32,7 +32,7 @@ async function signin(req, res) {
 		return res.status(error.statusCode).json(ErrorResponse);
 	}
 }
-async function addRoleToUser(req,res) {
+async function addRoleToUser(req, res) {
 	console.log("inside controller");
 	try {
 		const user = await UserService.addRole({
@@ -51,5 +51,5 @@ async function addRoleToUser(req,res) {
 module.exports = {
 	signup,
 	signin,
-	addRoleToUser
+	addRoleToUser,
 };

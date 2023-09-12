@@ -7,6 +7,7 @@ const { infoController } = require("../../controllers");
 const userRoutes = require("./user-routes");
 
 router.get("/info", AuthMiddlewares.checkAuthentication, infoController.info);
+router.get("/info",infoController.info);
 router.use("/user", userRoutes);
 
 module.exports = router;
