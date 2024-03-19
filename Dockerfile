@@ -1,10 +1,13 @@
 FROM node
 
-WORKDIR /developer/nodejs/flights_api
+WORKDIR /developer/nodejs/flights-api-service
 
-COPY . .
+COPY package.json .
+
+COPY package-lock.json .
 
 RUN npm ci
 
-CMD ["npm","run","dev"]
+COPY . .
 
+CMD ["npm","run","dev"]

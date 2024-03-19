@@ -17,7 +17,6 @@ function createToken(input) {
 			expiresIn: '1h',
 		});
 	} catch (error) {
-		// console.log(error);
 		throw error;
 	}
 }
